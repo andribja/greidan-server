@@ -1,6 +1,7 @@
 var chgpass = require('config/chgpass'); 
 var register = require('config/register'); 
 var login = require('config/login');   
+var postAd = require('config/postAd');
 
 module.exports = function(app) {        
 
@@ -12,12 +13,12 @@ module.exports = function(app) {
 
      app.post('/login',function(req,res){        
           var email = req.body.email;             
-               var password = req.body.password;       
+          var password = req.body.password;       
 
           login.login(email,password,function (found) {           
                console.log(found);             
                res.json(found);    
-     });    
+          });    
      });     
 
      app.post('/register',function(req,res){         
@@ -29,8 +30,20 @@ module.exports = function(app) {
           register.register(email,password,function (found) {             
                console.log(found);             
                res.json(found);    
-     });     
-     });     
+          });     
+     });
+
+     app.post('/postAd', function(res, req) {
+          var title = req.body.title;
+          var content = req.body.content;
+          var category = req.body.category;
+          var author = req.body.email;
+
+          postAd.postAd(title, content, category, author, function(found) {
+               console.log(found);
+               res.json(found);
+          });
+     });
 
      app.post('/api/chgpass', function(req, res) {       
           var id = req.body.id;                 
@@ -40,7 +53,7 @@ module.exports = function(app) {
           chgpass.cpass(id,opass,npass,function(found){           
                console.log(found);             
                res.json(found);    
-     });     
+          });     
      });     
 
      app.post('/api/resetpass', function(req, res) {         
@@ -50,7 +63,7 @@ module.exports = function(app) {
           chgpass.respass_init(email,function(found){             
                console.log(found);             
                res.json(found);    
-     });     
+          });     
      });     
 
      app.post('/api/resetpass/chg', function(req, res) {         
@@ -62,6 +75,6 @@ module.exports = function(app) {
           console.log(found);             
           res.json(found);    
      
-     });     
-     });  
+          });
+     });
 };
