@@ -1,7 +1,7 @@
 var chgpass = require('config/chgpass'); 
 var register = require('config/register'); 
 var login = require('config/login');   
-var postAd = require('config/postAd');
+var ad = require('config/ad');
 
 module.exports = function(app) {        
 
@@ -33,13 +33,18 @@ module.exports = function(app) {
           });     
      });
 
-     app.post('/postAd', function(res, req) {
+     app.get('/ad', function(req, res) {
+            var ad = ad.getAd;
+            res
+     });
+
+     app.post('/ad', function(res, req) {
           var title = req.body.title;
           var content = req.body.content;
           var category = req.body.category;
           var author = req.body.email;
 
-          postAd.postAd(title, content, category, author, function(found) {
+          ad.postAd(title, content, category, author, function(found) {
                console.log(found);
                res.json(found);
           });
