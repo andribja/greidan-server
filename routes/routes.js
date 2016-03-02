@@ -1,7 +1,7 @@
-var chgpass = require('config/chgpass'); 
-var register = require('config/register'); 
-var login = require('config/login');   
-var ad = require('config/ad');
+var chgpass = require('../config/chgpass'); 
+var register = require('../config/register'); 
+var login = require('../config/login');   
+var ad = require('../config/ad').ads;
 
 module.exports = function(app) {        
 
@@ -42,7 +42,7 @@ module.exports = function(app) {
             });
      });
 
-     app.post('/ad', function(res, req) {
+     app.post('/ad', function(req, res) {
           var title = req.body.title;
           var content = req.body.content;
           var category = req.body.category;
