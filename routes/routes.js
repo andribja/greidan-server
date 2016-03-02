@@ -34,17 +34,22 @@ module.exports = function(app) {
      });
 
      app.get('/ad', function(req, res) {
-            var ad = ad.getAd;
-            res
+            var ad_id = req.body.id;
+            console.log(ad_id);
+            ad.getAd(ad_id, null, null, function(err, result) {
+                console.log(result);
+                res.json(result);
+            });
      });
 
      app.post('/ad', function(res, req) {
           var title = req.body.title;
           var content = req.body.content;
           var category = req.body.category;
-          var author = req.body.email;
-
-          ad.postAd(title, content, category, author, function(found) {
+          var author_id = req.body.author_id;
+          var locLat = req.body.lat;
+          var locLong = req.body.lng;
+          ad.postAd(title, content, category, author, locLat, locLong, function(found) {
                console.log(found);
                res.json(found);
           });
