@@ -4,9 +4,9 @@ var ad = require('./models').ads;
 exports.postAd = function(title, content, category, author_id, locLat, locLong, callback) {
 
     var date = new Date();
-    var id = new mongoose.Types.ObjectId;
+    var _id = new mongoose.Types.ObjectId;
 
-    var newAd = {    
+    var newAd = new ad({    
             title: title,
             content : content,
             category : category,
@@ -14,14 +14,14 @@ exports.postAd = function(title, content, category, author_id, locLat, locLong, 
             timePosted : date,
             locLat : locLat,
             locLong : locLong,
-            id : id   
-        };
+            _id : _id
+        });
 
     newAd.save(function (err) {
         callback({
             'response': "Ad sucessfully posted",
             'success': true,
-            'id': id
+            '_id': _id
         });
     });
 }
@@ -34,6 +34,6 @@ exports.getAd = function(ad_id, author, timePosted, callback) {
     if(ad_id === undefined) {
         ad.find({}, callback);
     } else { 
-        ad.find({id: ad_id}, callback);
+        ad.find({_id: ad_id}, callback);
     }
 }

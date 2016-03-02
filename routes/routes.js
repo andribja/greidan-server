@@ -34,11 +34,12 @@ module.exports = function(app) {
      });
 
      app.get('/ad', function(req, res) {
-            var ad_id = req.body.id;
+            var ad_id = req.query._id;
             console.log(ad_id);
+            console.log('asdf');
             ad.getAd(ad_id, null, null, function(err, result) {
                 console.log(result);
-                res.send(result);
+                res.json(result);
             });
      });
 
