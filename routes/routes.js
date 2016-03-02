@@ -49,7 +49,7 @@ module.exports = function(app) {
           var author_id = req.body.author_id;
           var locLat = req.body.lat;
           var locLong = req.body.lng;
-          ad.postAd(title, content, category, author, locLat, locLong, function(found) {
+          ad.postAd(title, content, category, author_id, locLat, locLong, function(found) {
                console.log(found);
                res.json(found);
           });
