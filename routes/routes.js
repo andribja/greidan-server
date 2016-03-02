@@ -1,7 +1,7 @@
 var chgpass = require('../config/chgpass'); 
 var register = require('../config/register'); 
 var login = require('../config/login');   
-var ad = require('../config/ad').ads;
+var ad = require('../config/ad');
 
 module.exports = function(app) {        
 

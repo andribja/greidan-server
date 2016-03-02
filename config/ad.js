@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'); 
-var ad = require('./models').ads;  
+var ad = require('./models');  
 
 exports.postAd = function(title, content, category, author_id, locLat, locLong, callback) {
 
