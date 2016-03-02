@@ -34,10 +34,7 @@ module.exports = function(app) {
      });
 
      app.get('/ad', function(req, res) {
-            var ad_id = req.query._id;
-            console.log(ad_id);
-            console.log('asdf');
-            ad.getAd(ad_id, null, null, function(err, result) {
+            ad.getAd(req.query, function(err, result) {
                 console.log(result);
                 res.json(result);
             });

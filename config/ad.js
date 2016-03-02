@@ -1,9 +1,9 @@
 var mongoose = require('mongoose'); 
 var ad = require('./models').ads;  
 
-exports.postAd = function(title, content, category, author_id, locLat, locLong, callback) {
+exports.postAd = function(title, content, category, author_id, lng, lat, callback) {
 
-    var date = new Date();
+    var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
 
     var newAd = new ad({    
@@ -12,8 +12,8 @@ exports.postAd = function(title, content, category, author_id, locLat, locLong, 
             category : category,
             author_id : author_id,
             timePosted : date,
-            locLat : locLat,
-            locLong : locLong,
+            lat : lat,
+            lng : lng,
             _id : _id
         });
 
@@ -26,14 +26,11 @@ exports.postAd = function(title, content, category, author_id, locLat, locLong, 
     });
 }
 
-exports.getAd = function(ad_id, author, timePosted, callback) {
+exports.getAd = function(q, callback) {
     var options = {
         "limit":10,
         "sort":"timePosted"
     };
-    if(ad_id === undefined) {
-        ad.find({}, callback);
-    } else { 
-        ad.find({_id: ad_id}, callback);
-    }
+
+    ad.find(q, callback);
 }

@@ -15,9 +15,9 @@ var adSchema = mongoose.Schema({
     content : String,
     category : String,
     author_id : String,
-    timePosted : { type: Date, default: Date.now},
-    locLat : Number,
-    locLong : Number,
+    timePosted : { type: Number, default: Date.getTime()},
+    lat : Number,
+    lng : Number,
     id : Schema.Types.ObjectId   
 });
 
