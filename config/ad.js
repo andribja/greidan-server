@@ -1,12 +1,12 @@
 var mongoose = require('mongoose'); 
-var ad = require('./models');  
+var ad = require('./models').ads;  
 
 exports.postAd = function(title, content, category, author_id, locLat, locLong, callback) {
 
     var date = new Date();
     var id = new mongoose.Types.ObjectId;
 
-    var newAd = new ad({    
+    var newAd = {    
             title: title,
             content : content,
             category : category,
@@ -15,7 +15,7 @@ exports.postAd = function(title, content, category, author_id, locLat, locLong, 
             locLat : locLat,
             locLong : locLong,
             id : id   
-        });
+        };
 
     newAd.save(function (err) {
         callback({
@@ -32,9 +32,8 @@ exports.getAd = function(ad_id, author, timePosted, callback) {
         "sort":"timePosted"
     };
     if(ad_id === undefined) {
-        var q = ad.find({}, options);
+        ad.find({}, callback);
     } else { 
-        var q = ad.find({id: ad_id}, options);
+        ad.find({id: ad_id}, callback);
     }
-    q.exec('find', callback);
 }

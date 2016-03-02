@@ -38,7 +38,7 @@ module.exports = function(app) {
             console.log(ad_id);
             ad.getAd(ad_id, null, null, function(err, result) {
                 console.log(result);
-                res.json(result);
+                res.send(result);
             });
      });
 
