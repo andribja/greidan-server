@@ -50,5 +50,5 @@ exports.getAd = function(q, callback) {
     ad.find(q, callback).where('loc').near({
 		center: loc,
 		maxDistance: maxDistance 
-	}).limit(limit);
+	}).limit(limit).exec(callback);
 }
