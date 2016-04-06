@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');  
+var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;  
+var Schema = mongoose.Schema;
 
-var userSchema = mongoose.Schema({    
-     token : String,     
-     email: String,  
-     hashed_password: String,    
-     salt : String,  
-     temp_str:String 
+var userSchema = mongoose.Schema({
+    token: String,
+    email: String,
+    hashed_password: String,
+    salt: String,
+    temp_str: String
 });
 
 var adSchema = mongoose.Schema({

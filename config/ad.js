@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 var mongoose = require('mongoose'); 
 var ad = require('./models').ads;  
 var EARTH_RADIUS_KM = 6371;
+=======
+var mongoose = require('mongoose');
+var ad = require('./models').ads;
+>>>>>>> 5bf0a932d424f980039dcce0c985b50a95233379
 
 exports.postAd = function(title, content, category, author_id, lng, lat, callback) {
-
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
 
@@ -15,9 +19,9 @@ exports.postAd = function(title, content, category, author_id, lng, lat, callbac
             timePosted : date,
             loc : [lng, lat],
             _id : _id
-        });
+    });
 
-    newAd.save(function (err) {
+    newAd.save(function(err) {
         callback({
             'response': "Ad sucessfully posted",
             'success': true,
@@ -48,7 +52,3 @@ exports.getAd = function(q, callback) {
 		maxDistance: maxDistance 
 	}).limit(limit);
 }
-
-exports.getAdByLocation = function(q, callback) {
-    var options = {
-};
