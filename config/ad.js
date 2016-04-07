@@ -37,14 +37,6 @@ exports.getAd = function(q, callback) {
 	delete q.lat;
 	delete q.maxDistance;
     console.log(q, coords, maxDistance);
-    var options = {
-		"loc": {
-			$near: coords,
-			$maxDistance: maxDistance
-		  },
-        "limit": q.limit || 10,
-        "sort":"timePosted"
-    };
 
     ad.find(q).where('loc').near({
 		center: coords,

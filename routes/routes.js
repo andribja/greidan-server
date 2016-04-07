@@ -35,6 +35,7 @@ module.exports = function(app) {
         });
     });
 
+    // TODO RETURN USER NAME INSTEAD OF USERID
     app.get('/ad', function(req, res) {
         ad.getAd(req.query, function(err, result) {
             console.log(result);
@@ -42,6 +43,7 @@ module.exports = function(app) {
         });
     });
 
+    // TODO RETURN USER NAME INSTEAD OF USERID
     app.post('/ad', function(req, res) {
         var token = req.body.token;
         delete req.body.token;
@@ -58,7 +60,7 @@ module.exports = function(app) {
             });
         });
     });
-    
+
     app.get('/review', function(req, res) {
         review.getReview(req.query, function(err, result) {
             console.log(result);
