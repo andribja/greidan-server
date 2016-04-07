@@ -4,6 +4,7 @@ var login = require('../config/login');
 var ad = require('../config/ad');
 var message = require('../config/message');
 var review = require('../config/review');
+var user = require('../config/user');
 
 module.exports = function(app) {
 
@@ -42,15 +43,19 @@ module.exports = function(app) {
     });
 
     app.post('/ad', function(req, res) {
-        var title = req.body.title;
-        var content = req.body.content;
-        var category = req.body.category;
         var token = req.body.token;
-        var locLat = req.body.lat;
-        var locLong = req.body.lng;
-        ad.postAd(title, content, category, token, locLat, locLong, function(found) {
-            console.log(found);
-            res.json(found);
+        delete req.body.token;
+        user.getUserIdByToken(token, function(err, user) {
+            var title = req.body.title;
+            var content = req.body.content;
+            var category = req.body.category;
+            var author_id = user._id;
+            var locLat = req.body.lat;
+            var locLong = req.body.lng;
+            ad.postAd(title, content, category, author_id, locLat, locLong, function(found) {
+                console.log(found);
+                res.json(found);
+            });
         });
     });
     
