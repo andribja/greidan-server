@@ -38,6 +38,7 @@ module.exports = function(app) {
     // TODO RETURN USER NAME INSTEAD OF USERID
     app.get('/ad', function(req, res) {
         ad.getAd(req.query, function(err, result) {
+            if(result instanceof Array) result = {adlist: result};
             console.log(result);
             res.json(result);
         });
