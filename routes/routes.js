@@ -2,6 +2,8 @@ var chgpass = require('../config/chgpass');
 var register = require('../config/register');
 var login = require('../config/login');
 var ad = require('../config/ad');
+var message = require('../config/message');
+var review = require('../config/review');
 
 module.exports = function(app) {
 
@@ -43,10 +45,46 @@ module.exports = function(app) {
         var title = req.body.title;
         var content = req.body.content;
         var category = req.body.category;
-        var author_id = req.body.author_id;
+        var token = req.body.token;
         var locLat = req.body.lat;
         var locLong = req.body.lng;
-        ad.postAd(title, content, category, author_id, locLat, locLong, function(found) {
+        ad.postAd(title, content, category, token, locLat, locLong, function(found) {
+            console.log(found);
+            res.json(found);
+        });
+    });
+    
+    app.get('/review', function(req, res) {
+        review.getReview(req.query, function(err, result) {
+            console.log(result);
+            res.json(result);
+        });
+    });
+    
+    app.post('/review', function(req, res) {
+        var stars = req.body.stars;
+        var content = req.body.content;
+        var token = req.body.token;
+        var reviewee_id = req.body.reviewee_id;
+        review.postReview(stars, content, token, reviewee_id, function(found) {
+            console.log(found);
+            res.json(found);
+        });
+    });
+    
+    app.get('/message', function(req, res) {
+        message.getMessage(req.query, function(err, result) {
+            console.log(result);
+            res.json(result);
+        });
+    });
+    
+    app.post('/message', function(req, res) {
+        var subject = req.body.subject;
+        var content = req.body.content;
+        var token = req.body.token;
+        var recipient_id = req.body.recipient_id;
+        message.sendMessage(subject, content, token, recipient_id, function(found) {
             console.log(found);
             res.json(found);
         });

@@ -1,12 +1,17 @@
 var mongoose = require('mongoose'); 
 var ad = require('./models').ads;  
+var user = require('./models').users;
 var EARTH_RADIUS_KM = 6371;
 
-exports.postAd = function(title, content, category, author_id, lng, lat, callback) {
+exports.postAd = function(title, content, category, token, lng, lat, callback) {
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
-
-    var newAd = new ad({    
+    console.log(token);
+    var author_id = user.findOne({'token': token}, function(err) {
+        if(err) handleError(err);
+    });
+    console.log(author_id._id);
+    /*var newAd = new ad({    
             title: title,
             content : content,
             category : category,
@@ -15,14 +20,15 @@ exports.postAd = function(title, content, category, author_id, lng, lat, callbac
             loc : [lng, lat],
             _id : _id
     });
-
+    console.log(newAd);
     newAd.save(function(err) {
+        if(err) console.error(err);
         callback({
             'response': "Ad sucessfully posted",
             'success': true,
             '_id': _id
         });
-    });
+    });*/
 };
 
 exports.getAd = function(q, callback) {
@@ -42,7 +48,7 @@ exports.getAd = function(q, callback) {
         "sort":"timePosted"
     };
 
-    ad.find(q, callback).where('loc').near({
+    ad.find(q).where('loc').near({
 		center: coords,
 		maxDistance: maxDistance 
 	}).limit(limit).exec(callback);

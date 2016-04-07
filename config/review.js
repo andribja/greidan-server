@@ -1,10 +1,14 @@
 var mongoose = require('mongoose'); 
 var review = require('./models').reviews;  
+var user = require('./models').users;
 
-exports.postReview = function(stars, content, author_id, reviewee_id, callback) {
+exports.postReview = function(stars, content, token, reviewee_id, callback) {
 
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
+    var author_id = user.findOne({'token': token}, function(err) {
+        if(err) handleError(err);
+    });
 
     var newReview = new review({    
             stars : stars,
