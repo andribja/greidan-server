@@ -19,7 +19,7 @@ var adSchema = mongoose.Schema({
     content : String,
     category : String,
     author_id : String,
-    timePosted : { type: Number, default: Date.getTime()},
+    timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId   
 });
 
@@ -28,7 +28,7 @@ var reviewSchema = mongoose.Schema({
     content : String,
     reviewee_id : String,
     author_id : String,
-    timePosted : { type: Number, default: Date.getTime()},
+    timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
 });
 
@@ -37,7 +37,7 @@ var messageSchema = mongoose.Schema({
     content : String,
     author_id : String,
     recipient_id : String,
-    timePosted : { type: Number, default: Date.getTime()},
+    timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
 });
 
