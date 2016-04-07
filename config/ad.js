@@ -27,13 +27,16 @@ exports.postAd = function(title, content, category, author_id, lng, lat, callbac
 };
 
 exports.getAd = function(q, callback) {
-    var coords = [q.lng, q.lat] || [0.0, 0.0];
+    var coords;
+    if(q.lng === undefined || q.lat === undefined) coords = [0.0, 0.0];
+    else coords = [q.lng, q.lat];
     var maxDistance = (q.maxDistance || 30)/EARTH_RADIUS_KM;
 	var limit = q.limit || 10;
 	delete q.limit;
 	delete q.lng;
 	delete q.lat;
 	delete q.maxDistance;
+    console.log(q, coords, maxDistance);
     var options = {
 		"loc": {
 			$near: coords,
