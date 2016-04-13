@@ -2,13 +2,10 @@ var mongoose = require('mongoose');
 var message = require('./models').messages;  
 var user = require('./models').users;
 
-exports.sendMessage = function(subject, content, token, recipient_id, callback) {
+exports.sendMessage = function(subject, content, author_id, recipient_id, callback) {
 
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
-    var author_id = user.findOne({'token':token}, function(err){
-        if(err) handleError(err);
-    });
 
     var newMessage = new message({    
             subject: subject,

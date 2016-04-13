@@ -69,13 +69,17 @@ module.exports = function(app) {
     });
     
     app.post('/review', function(req, res) {
-        var stars = req.body.stars;
-        var content = req.body.content;
         var token = req.body.token;
-        var reviewee_id = req.body.reviewee_id;
-        review.postReview(stars, content, token, reviewee_id, function(found) {
-            console.log(found);
-            res.json(found);
+        user.getUserIdByToken(token, function(err, user) {
+            if(err) console.log(err);
+            var author_id = user._id;
+            var stars = req.body.stars;
+            var content = req.body.content;
+            var reviewee_id = req.body.reviewee_id;
+            review.postReview(stars, content, author_id, reviewee_id, function(found) {
+                console.log(found);
+                res.json(found);
+            });
         });
     });
     
@@ -87,13 +91,16 @@ module.exports = function(app) {
     });
     
     app.post('/message', function(req, res) {
-        var subject = req.body.subject;
-        var content = req.body.content;
         var token = req.body.token;
-        var recipient_id = req.body.recipient_id;
-        message.sendMessage(subject, content, token, recipient_id, function(found) {
-            console.log(found);
-            res.json(found);
+        user.getUserIdByToken(token, function(err, user) {
+            var author_id = user._id;
+            var subject = req.body.subject;
+            var content = req.body.content;
+            var recipient_id = req.body.recipient_id;
+            message.sendMessage(subject, content, author_id, recipient_id, function(found) {
+                console.log(found);
+                res.json(found);
+            });
         });
     });
 
