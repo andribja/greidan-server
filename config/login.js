@@ -4,10 +4,10 @@ var mongoose = require('mongoose');
 var gravatar = require('gravatar');
 var user = require('./models').users;
 
-exports.login = function(email, password, callback) {
+exports.login = function(username, password, callback) {
 
     user.find({
-        email: email
+        username: username 
     }, function(err, users) {
         if (users.length != 0) {
             var temp = users[0].salt;
@@ -15,14 +15,14 @@ exports.login = function(email, password, callback) {
             var id = users[0].token;
             var newpass = temp + password;
             var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
-            var grav_url = gravatar.url(email, {
+            var grav_url = gravatar.url(users[0].email, {
                 s: '200',
                 r: 'pg',
                 d: '404'
             });
             if (hash_db == hashed_password) {
                 callback({
-                    'response': "Login Sucess",
+                    'response': "Login Successful",
                     'success': true,
                     'token': id,
                     'grav': grav_url
@@ -35,7 +35,7 @@ exports.login = function(email, password, callback) {
             }
         } else {
             callback({
-                'response': "User not exist",
+                'response': "User not found",
                 'success': false
             });
         }

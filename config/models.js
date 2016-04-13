@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = mongoose.Schema({
+    username : String,
     token: String,
     email: String,
     hashed_password: String,
@@ -19,6 +20,7 @@ var adSchema = mongoose.Schema({
     content : String,
     category : String,
     author_id : String,
+    author_name : String,
     timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId   
 });
@@ -28,14 +30,21 @@ var reviewSchema = mongoose.Schema({
     content : String,
     reviewee_id : String,
     author_id : String,
+    author_name : String,
     timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
+});
+
+var categorySchema = mongoose.Schema({
+    id : Schema.Types.ObjectId,
+    category_name : String
 });
 
 var messageSchema = mongoose.Schema({
     subject : String,
     content : String,
     author_id : String,
+    author_name : String,
     recipient_id : String,
     timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
@@ -46,3 +55,4 @@ module.exports.users = mongoose.model('users', userSchema);
 module.exports.ads = mongoose.model('ads', adSchema);
 module.exports.reviews = mongoose.model('reviews', reviewSchema);
 module.exports.messages = mongoose.model('messages', messageSchema);
+module.exports.categories = mongoose.model('categories', categorySchema);

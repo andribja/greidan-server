@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var user = require('./models').users;
 
 
-exports.register = function(email, password, callback) {
+exports.register = function(email, username, password, callback) {
     var x = email;
     if (!(x.indexOf("@") === x.length)) {
         if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/) && password.length > 4 && password.match(/[0-9]/)) {
@@ -17,27 +17,40 @@ exports.register = function(email, password, callback) {
             var newuser = new user({
                 token: token,
                 email: email,
+                username: username,
                 hashed_password: hashed_password,
                 salt: temp
             });
 
             user.find({
                 email: email
-            }, function(err, users) {
-
-                var len = users.length;
-
-                if (len == 0) {
-                    newuser.save(function(err) {
-                        callback({
-                            'response': "Sucessfully Registered",
-                            'success': true,
-                            'token': token
-                        });
-                    });
-                } else {
+            }, function(err, users_email) {
+                var len = users_email.length;
+                if(len > 0) { 
                     callback({
                         'response': "Email already Registered"
+                    });
+                } else {
+                    user.find({
+                        username: username 
+                    }, function(err, users_name) {
+
+                        var len = users_name.length;
+
+                        if (len == 0) {
+                            newuser.save(function(err) {
+                                callback({
+                                    'response': "Successfully Registered",
+                                    'success': true,
+                                    'token': token
+                                });
+                            });
+                        } else {
+                             callback({
+                                'response': "Username already Registered"
+                             });
+
+                        }
                     });
                 }
             });

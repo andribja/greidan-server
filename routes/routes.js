@@ -5,6 +5,7 @@ var ad = require('../config/ad');
 var message = require('../config/message');
 var review = require('../config/review');
 var user = require('../config/user');
+var category = require('../config/category');
 
 module.exports = function(app) {
 
@@ -14,10 +15,10 @@ module.exports = function(app) {
     });
 
     app.post('/login', function(req, res) {
-        var email = req.body.email;
+        var username = req.body.username;
         var password = req.body.password;
 
-        login.login(email, password, function(found) {
+        login.login(username, password, function(found) {
             console.log(found);
             res.json(found);
         });
@@ -26,16 +27,16 @@ module.exports = function(app) {
     app.post('/register', function(req, res) {
         var email = req.body.email;
         var password = req.body.password;
+        var username = req.body.username;
 
-        console.log("got", email, password);
+        console.log("got", email, username, password);
 
-        register.register(email, password, function(found) {
+        register.register(email, username, password, function(found) {
             console.log(found);
             res.json(found);
         });
     });
 
-    // TODO RETURN USER NAME INSTEAD OF USERID
     app.get('/ad', function(req, res) {
         ad.getAd(req.query, function(err, result) {
             if(result instanceof Array) result = {adlist: result};
@@ -44,21 +45,26 @@ module.exports = function(app) {
         });
     });
 
-    // TODO RETURN USER NAME INSTEAD OF USERID
     app.post('/ad', function(req, res) {
         var token = req.body.token;
         delete req.body.token;
-        user.getUserIdByToken(token, function(err, user) {
-            var title = req.body.title;
-            var content = req.body.content;
-            var category = req.body.category;
-            var author_id = user._id;
-            var locLat = req.body.lat;
-            var locLong = req.body.lng;
-            ad.postAd(title, content, category, author_id, locLat, locLong, function(found) {
-                console.log(found);
-                res.json(found);
-            });
+        user.getUserIdByToken(token, function(err, found_user) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                var title = req.body.title;
+                var content = req.body.content;
+                var category = req.body.category;
+                var author_id = found_user._id;
+                var locLat = req.body.lat;
+                var locLong = req.body.lng;
+                var author_name = found_user.username;
+                ad.postAd(title, content, category, author_id, author_name, locLat, locLong, function(found) {
+                    console.log(found);
+                    res.json(found);
+                });
+            }
         });
     });
 
@@ -71,37 +77,65 @@ module.exports = function(app) {
     
     app.post('/review', function(req, res) {
         var token = req.body.token;
-        user.getUserIdByToken(token, function(err, user) {
-            if(err) console.log(err);
-            var author_id = user._id;
-            var stars = req.body.stars;
-            var content = req.body.content;
-            var reviewee_id = req.body.reviewee_id;
-            review.postReview(stars, content, author_id, reviewee_id, function(found) {
-                console.log(found);
-                res.json(found);
-            });
+        user.getUserIdByToken(token, function(err, found_user) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                var author_id = found_user._id;
+                var author_name = found_user.username;
+                var stars = req.body.stars;
+                var content = req.body.content;
+                var reviewee_id = req.body.reviewee_id;
+                review.postReview(stars, content, author_id, author_name, reviewee_id, function(found) {
+                    console.log(found);
+                    res.json(found);
+                });
+            }
         });
     });
     
     app.get('/message', function(req, res) {
-        message.getMessage(req.query, function(err, result) {
-            console.log(result);
-            res.json(result);
+        var token = req.body.token;
+        user.getUserIdByToken(token, function(err, found_user) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                var query = req.query;
+                query.recipient_id = found_user._id;
+                message.getMessage(query, function(err, result) {
+                    console.log(result);
+                    res.json(result);
+                });
+            }
         });
     });
     
     app.post('/message', function(req, res) {
         var token = req.body.token;
-        user.getUserIdByToken(token, function(err, user) {
-            var author_id = user._id;
-            var subject = req.body.subject;
-            var content = req.body.content;
-            var recipient_id = req.body.recipient_id;
-            message.sendMessage(subject, content, author_id, recipient_id, function(found) {
-                console.log(found);
-                res.json(found);
-            });
+        user.getUserIdByToken(token, function(err, found_user) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                var author_id = found_user._id;
+                var author_name = found_user.username;
+                var subject = req.body.subject;
+                var content = req.body.content;
+                var recipient_id = req.body.recipient_id;
+                message.sendMessage(subject, content, author_id, author_name, recipient_id, function(found) {
+                    console.log(found);
+                    res.json(found);
+                });
+            }
+        });
+    });
+
+    app.get('/category', function(req, res) {
+        category.getCategory(req.query, function(err, result) {
+            console.log(result);
+            res.json(result);
         });
     });
 

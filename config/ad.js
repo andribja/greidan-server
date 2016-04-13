@@ -3,7 +3,7 @@ var ad = require('./models').ads;
 var user = require('./models').users;
 var EARTH_RADIUS_KM = 6371;
 
-exports.postAd = function(title, content, category, author_id, lng, lat, callback) {
+exports.postAd = function(title, content, category, author_id, author_name, lng, lat, callback) {
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
     var newAd = new ad({    
@@ -11,6 +11,7 @@ exports.postAd = function(title, content, category, author_id, lng, lat, callbac
             content : content,
             category : category,
             author_id : author_id,
+            author_name : author_name,
             timePosted : date,
             loc : [lng, lat],
             _id : _id

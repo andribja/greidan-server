@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var message = require('./models').messages;  
 var user = require('./models').users;
 
-exports.sendMessage = function(subject, content, author_id, recipient_id, callback) {
+exports.sendMessage = function(subject, content, author_id, author_name, recipient_id, callback) {
 
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
@@ -12,6 +12,7 @@ exports.sendMessage = function(subject, content, author_id, recipient_id, callba
             content : content,
             recipient_id : recipient_id,
             author_id : author_id,
+            author_name : author_name,
             timePosted : date,
             _id : _id
         });
