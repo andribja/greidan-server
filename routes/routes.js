@@ -6,8 +6,9 @@ var message = require('../config/message');
 var review = require('../config/review');
 var user = require('../config/user');
 var category = require('../config/category');
+var upload = require('../config/imgUpload');
 
-module.exports = function(app) {
+module.exports = function registerRoutes(app) {
 
 
     app.get('/', function(req, res) {
@@ -24,6 +25,22 @@ module.exports = function(app) {
         });
     });
 
+	/*app.post('/upload-img', upload.rawBody, function (req, res) {
+		if (req.rawBody && req.bodyLength > 0) {
+			var img = req.body.img;
+            upload.base64_decode(img,req.body.filename);
+
+        	res.writeHead(200, {'Content-Type':'text/plain'});
+        	res.write('the image is saved');
+        	res.end();
+       		 if (req.url != "/")
+           	next();
+			res.send(200, {status: 'OK'});
+		} else {
+			res.send(500);
+		}
+	});
+*/
     app.post('/register', function(req, res) {
         var email = req.body.email;
         var password = req.body.password;
