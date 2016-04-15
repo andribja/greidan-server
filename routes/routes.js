@@ -60,7 +60,7 @@ module.exports = function(app) {
                 var locLat = req.body.lat;
                 var locLong = req.body.lng;
                 var author_name = found_user.username;
-                ad.postAd(title, content, category, author_id, author_name, locLat, locLong, function(found) {
+                ad.postAd(title, content, category, author_id, author_name, locLong, locLat, function(found) {
                     console.log(found);
                     res.json(found);
                 });

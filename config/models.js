@@ -22,6 +22,7 @@ var adSchema = mongoose.Schema({
     author_id : String,
     author_name : String,
     timePosted : { type: Number, default: new Date().getTime()},
+    img : { type : Buffer, contentType : String },
     id : Schema.Types.ObjectId   
 });
 
