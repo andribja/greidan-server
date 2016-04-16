@@ -6,6 +6,7 @@ var userSchema = mongoose.Schema({
     username : String,
     token: String,
     email: String,
+    imgPath : String,
     hashed_password: String,
     salt: String,
     temp_str: String
@@ -22,7 +23,7 @@ var adSchema = mongoose.Schema({
     author_id : String,
     author_name : String,
     timePosted : { type: Number, default: new Date().getTime()},
-    img : { type : Buffer, contentType : String },
+    imgPath : String,
     id : Schema.Types.ObjectId   
 });
 

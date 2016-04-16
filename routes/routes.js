@@ -6,12 +6,34 @@ var message = require('../config/message');
 var review = require('../config/review');
 var user = require('../config/user');
 var category = require('../config/category');
+var multer = require('multer');
+var uploadAdImg = multer({ dest: './public/ad_img' });
+var uploadUserImg = multer({ dest: './public/user_img' });
 
-module.exports = function(app) {
+module.exports = function registerRoutes(app) {
+    app.post('/uploadUserImg', uploadUserImg.single('image'), function(req, res) {
+        console.log(req.file);
+        res.body = req.file;
+        res.json({
+                    status: 204,
+                    message: "Upload successful",
+                    file: req.file,
+                });
+    })
+    
 
+    app.post('/uploadAdImg', uploadAdImg.single('image'), function(req, res) {
+        console.log(req.file);
+        res.body = req.file;
+        res.json({
+                    status: 204,
+                    message: "Upload successful",
+                    file: req.file,
+                });
+    })
 
     app.get('/', function(req, res) {
-        res.end("Node-Android-Project");
+        res.end("Node-greidan");
     });
 
     app.post('/login', function(req, res) {
@@ -60,6 +82,7 @@ module.exports = function(app) {
                 var locLat = req.body.lat;
                 var locLong = req.body.lng;
                 var author_name = found_user.username;
+                var imgPath = req.body.imgPath;
                 ad.postAd(title, content, category, author_id, author_name, locLong, locLat, function(found) {
                     console.log(found);
                     res.json(found);
