@@ -90,7 +90,7 @@ module.exports = function registerRoutes(app) {
                 var locLong = req.body.lng;
                 var author_name = found_user.username;
                 var imgPath = req.body.imgPath;
-                ad.postAd(title, content, category, author_id, author_name, locLong, locLat, function(found) {
+                ad.postAd(title, content, category, author_id, author_name, locLong, locLat, imgPath, function(found) {
                     console.log(found);
                     res.json(found);
                 });
