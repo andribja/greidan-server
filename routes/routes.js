@@ -16,7 +16,7 @@ module.exports = function registerRoutes(app) {
         res.body = req.file;
         res.json({
                     status: 204,
-                    message: "Upload successful",
+                    response: "Upload successful",
                     file: req.file,
                 });
     })
@@ -27,7 +27,7 @@ module.exports = function registerRoutes(app) {
         res.body = req.file;
         res.json({
                     status: 204,
-                    message: "Upload successful",
+                    response: "Upload successful",
                     file: req.file,
                 });
     })
