@@ -67,6 +67,13 @@ module.exports = function registerRoutes(app) {
         });
     });
 
+    app.get('/user', function(req, res) {
+        user.getUser(req.query, function(err, result) {
+            console.log(result);
+            res.json(result);
+        });
+    });
+
     app.post('/ad', function(req, res) {
         var token = req.body.token;
         delete req.body.token;
