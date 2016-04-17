@@ -69,6 +69,7 @@ module.exports = function registerRoutes(app) {
 
     app.get('/user', function(req, res) {
         user.getUser(req.query, function(err, result) {
+            if(result instanceof Array) result = {userlist : result};  
             console.log(result);
             res.json(result);
         });
