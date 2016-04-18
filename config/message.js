@@ -32,5 +32,5 @@ exports.getMessage = function(q, callback) {
         "sort":"timePosted"
     };
 
-    ad.find(q, callback);
+    message.find(q, callback);
 }
