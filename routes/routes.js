@@ -176,6 +176,13 @@ module.exports = function registerRoutes(app) {
             res.json(result);
         });
     });
+    
+    app.post('/loadCategories', function(req, res) {
+        category.loadCategories(req.query, function(err, result) {
+            console.log(result);
+            res.json(result);
+        });
+    });
 
     app.post('/api/chgpass', function(req, res) {
         var id = req.body.id;
