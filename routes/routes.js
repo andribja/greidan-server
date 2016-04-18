@@ -68,7 +68,7 @@ module.exports = function registerRoutes(app) {
     });
 
     app.get('/userAds', function(req, res) {
-        ad.getAdNoLocation(req.query, function(err, result) {
+        ad.getAdNoLoc(req.query, function(err, result) {
             if(result instanceof Array) result = {adlist: result};
             console.log(result);
             res.json(result);
