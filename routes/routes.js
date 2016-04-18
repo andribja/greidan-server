@@ -67,6 +67,14 @@ module.exports = function registerRoutes(app) {
         });
     });
 
+    app.get('/userAds', function(req, res) {
+        ad.getAdNoLocation(req.query, function(err, result) {
+            if(result instanceof Array) result = {adlist: result};
+            console.log(result);
+            res.json(result);
+        });
+    });
+
     app.get('/user', function(req, res) {
         user.getUser(req.query, function(err, result) {
             if(result instanceof Array) result = {userlist : result};  

@@ -45,3 +45,14 @@ exports.getAd = function(q, callback) {
 		maxDistance: maxDistance 
 	}).limit(limit).exec(callback);
 }
+
+exports.getAdsNoLoc = function (q, callback) {
+    var options = {
+        "limit":20,
+        "sort":"timePosted"
+    };
+
+    console.log(q);
+
+    ad.find(q, callback);
+}
