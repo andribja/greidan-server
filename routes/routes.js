@@ -133,7 +133,7 @@ module.exports = function registerRoutes(app) {
     });
     
     app.get('/message', function(req, res) {
-        var token = req.body.token;
+        var token = req.query.token;
         user.getUserIdByToken(token, function(err, found_user) {
             if(err) {
                 console.log(err);
@@ -151,7 +151,7 @@ module.exports = function registerRoutes(app) {
     });
     
     app.get('/messageSent', function(req, res) {
-        var token = req.body.token;
+        var token = req.query.token;
         user.getUserIdByToken(token, function(err, found_user) {
             if(err) {
                 console.log(err);
@@ -159,10 +159,13 @@ module.exports = function registerRoutes(app) {
             } else {
                 var query = req.query;
                 query.sender_id = found_user._id;
-                message.getMessage(query, function(err, result) {
-                    if(result instanceof Array) result = {messagelist: result};
-                    console.log(result);
-                    res.json(result);
+                user.getUser(query.recipient, function(err, found_recipient) {
+                    query.recipient_id = found_recipient._id;
+                    message.getMessage(query, function(err, result) {
+                        if(result instanceof Array) result = {messagelist: result};
+                        console.log(result);
+                        res.json(result);
+                    });
                 });
             }
         });
