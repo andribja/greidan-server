@@ -46,7 +46,7 @@ exports.getAd = function(q, callback) {
 	}).limit(limit).exec(callback);
 }
 
-exports.getAdsNoLoc = function (q, callback) {
+exports.getAdNoLoc = function (q, callback) {
     var options = {
         "limit":20,
         "sort":"timePosted"
