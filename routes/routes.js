@@ -181,9 +181,10 @@ module.exports = function registerRoutes(app) {
                 var author_name = found_user.username;
                 var subject = req.body.subject;
                 var content = req.body.content;
-                user.getUser({username: req.body.recipient}, function(err, found_recipient) {
+                var recipient_name = req.body.recipient_name;
+                user.getUser({username: recipient_name}, function(err, found_recipient) {
                     var recipient_id = found_recipient[0]._id; 
-                    message.sendMessage(subject, content, author_id, author_name, recipient_id, function(found) {
+                    message.sendMessage(subject, content, author_id, author_name, recipient_id, recipient_name, function(found) {
                         console.log(found);
                         res.json(found);
                     });

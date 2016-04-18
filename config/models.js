@@ -51,6 +51,7 @@ var messageSchema = mongoose.Schema({
     author_id : String,
     author_name : String,
     recipient_id : String,
+    recipient_name : String,
     timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
 });
