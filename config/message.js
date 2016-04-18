@@ -11,7 +11,7 @@ exports.sendMessage = function(subject, content, author_id, author_name, recipie
             subject: subject,
             content : content,
             recipient_id : recipient_id,
-            reicpient_name : recipient_name,
+            recipient_name : recipient_name,
             author_id : author_id,
             author_name : author_name,
             timePosted : date,
