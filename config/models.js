@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
     imgPath : String,
     hashed_password: String,
     salt: String,
-    temp_str: String
+    temp_str: String,
+    time_joined:  { type: Number, default: new Date().getTime()}
 });
 
 var adSchema = mongoose.Schema({
