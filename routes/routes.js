@@ -86,11 +86,13 @@ module.exports = function registerRoutes(app) {
                 var title = req.body.title;
                 var content = req.body.content;
                 var category = req.body.category;
-                var author_id = found_user._id;
                 var locLat = req.body.lat;
                 var locLong = req.body.lng;
-                var author_name = found_user.username;
                 var imgPath = req.body.imgPath;
+                if(found_user != undefined) {
+                    var author_id = found_user._id;
+                    var author_name = found_user.username;
+                }
                 ad.postAd(title, content, category, author_id, author_name, locLong, locLat, imgPath, function(found) {
                     console.log(found);
                     res.json(found);
@@ -114,13 +116,14 @@ module.exports = function registerRoutes(app) {
                 console.log(err);
                 res.send(err);
             } else {
-                var author_id = found_user._id;
-                var author_name = found_user.username;
+                if(found_user != undefined) {
+                    var author_id = found_user._id;
+                    var author_name = found_user.username;
+                }
                 var stars = req.body.stars;
                 var content = req.body.content;
                 var reviewee_name = req.body.reviewee_name;
 
-                console.log("reviewee_name:", reviewee_name);
                 user.getUser({username: reviewee_name}, function(err, found_reviewee) {
                     console.log("found reviewee:", found_reviewee);
                     review.postReview(stars, content, author_id, author_name, reviewee_name._id, reviewee_name, function(found) {
@@ -140,7 +143,7 @@ module.exports = function registerRoutes(app) {
                 res.send(err);
             } else {
                 var query = req.query;
-                query.recipient_id = found_user._id;
+                if(found_user != undefined) query.recipient_id = found_user._id;
                 delete query.token;
                 message.getMessage(query, function(err, result) {
                     if(result instanceof Array) result = {messagelist: result};
