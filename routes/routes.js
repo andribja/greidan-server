@@ -159,15 +159,10 @@ module.exports = function registerRoutes(app) {
             } else {
                 var query = req.query;
                 query.sender_id = found_user._id;
-                user.getUser(query.recipient, function(err, found_recipient) {
-                    query.recipient_id = found_recipient._id;
-                    delete query.recipient;
-                    delete query.token;
-                    message.getMessage(query, function(err, result) {
-                        if(result instanceof Array) result = {messagelist: result};
-                        console.log(result);
-                        res.json(result);
-                    });
+                message.getMessage(query, function(err, result) {
+                    if(result instanceof Array) result = {messagelist: result};
+                    console.log(result);
+                    res.json(result);
                 });
             }
         });
@@ -185,10 +180,12 @@ module.exports = function registerRoutes(app) {
                 var author_name = found_user.username;
                 var subject = req.body.subject;
                 var content = req.body.content;
-                var recipient_id = req.body.recipient_id;
-                message.sendMessage(subject, content, author_id, author_name, recipient_id, function(found) {
-                    console.log(found);
-                    res.json(found);
+                user.getUser(req.body.recipient, function(err, found_recipient) {
+                    var recipient_id = found_recipient._id; 
+                    message.sendMessage(subject, content, author_id, author_name, recipient_id, function(found) {
+                        console.log(found);
+                        res.json(found);
+                    });
                 });
             }
         });
