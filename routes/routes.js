@@ -121,7 +121,7 @@ module.exports = function registerRoutes(app) {
                 var reviewee_name = req.body.reviewee_name;
 
                 console.log("reviewee_name:", reviewee_name);
-                user.getUserIdByName(reviewee_name, function(err, found_reviewee) {
+                user.getUser({username: reviewee_name}, function(err, found_reviewee) {
                     console.log("found reviewee:", found_reviewee);
                     review.postReview(stars, content, author_id, author_name, reviewee_name._id, reviewee_name, function(found) {
                         console.log(found);
