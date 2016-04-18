@@ -101,6 +101,7 @@ module.exports = function registerRoutes(app) {
 
     app.get('/review', function(req, res) {
         review.getReview(req.query, function(err, result) {
+            result = {'reviewlist' : result};
             console.log(result);
             res.json(result);
         });
@@ -117,10 +118,15 @@ module.exports = function registerRoutes(app) {
                 var author_name = found_user.username;
                 var stars = req.body.stars;
                 var content = req.body.content;
-                var reviewee_id = req.body.reviewee_id;
-                review.postReview(stars, content, author_id, author_name, reviewee_id, function(found) {
-                    console.log(found);
-                    res.json(found);
+                var reviewee_name = req.body.reviewee_name;
+
+                console.log("reviewee_name:", reviewee_name);
+                user.getUserIdByName(reviewee_name, function(err, found_reviewee) {
+                    console.log("found reviewee:", found_reviewee);
+                    review.postReview(stars, content, author_id, author_name, reviewee_name._id, reviewee_name, function(found) {
+                        console.log(found);
+                        res.json(found);
+                    });
                 });
             }
         });
