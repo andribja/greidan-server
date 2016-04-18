@@ -141,6 +141,7 @@ module.exports = function registerRoutes(app) {
             } else {
                 var query = req.query;
                 query.recipient_id = found_user._id;
+                delete query.token;
                 message.getMessage(query, function(err, result) {
                     if(result instanceof Array) result = {messagelist: result};
                     console.log(result);
