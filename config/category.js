@@ -17,7 +17,6 @@ exports.loadCategories = function(q, callback) {
     mongoose.connection.db.dropCollection('categories', function(err, result) {
         if(err) console.log(err);
     });
-    console.log(categories);
     category.collection.insert(categories, function(err){
         if(err) console.log(err);
         category.find({}, callback);

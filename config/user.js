@@ -6,5 +6,5 @@ exports.getUserIdByToken = function(token, callback) {
 };
 
 exports.getUser = function(q, callback) {
-    user.find(q, "_id username email imgPath time_joined", callback);
+    user.find(q, "_id username email imgPath time_joined avg_rating", callback);
 }
