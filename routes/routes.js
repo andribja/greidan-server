@@ -161,6 +161,8 @@ module.exports = function registerRoutes(app) {
                 query.sender_id = found_user._id;
                 user.getUser(query.recipient, function(err, found_recipient) {
                     query.recipient_id = found_recipient._id;
+                    delete query.recipient;
+                    delete query.token;
                     message.getMessage(query, function(err, result) {
                         if(result instanceof Array) result = {messagelist: result};
                         console.log(result);
