@@ -35,6 +35,7 @@ var reviewSchema = mongoose.Schema({
     reviewee_id : String,
     author_id : String,
     author_name : String,
+    reviewee_name: String,
     timePosted : { type: Number, default: new Date().getTime()},
     id : Schema.Types.ObjectId
 });

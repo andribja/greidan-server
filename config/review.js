@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var review = require('./models').reviews;  
 var user = require('./models').users;
 
-exports.postReview = function(stars, content, author_id, author_name, reviewee_id, callback) {
+exports.postReview = function(stars, content, author_id, author_name, reviewee_id, reviewee_name, callback) {
 
     var date = new Date().getTime();
     var _id = new mongoose.Types.ObjectId;
@@ -13,6 +13,7 @@ exports.postReview = function(stars, content, author_id, author_name, reviewee_i
             author_id : author_id,
             author_name : author_name,
             reviewee_id : reviewee_id,
+            reviewee_name : reviewee_name,
             timePosted : date,
             _id : _id
         });
@@ -32,5 +33,7 @@ exports.getReview = function(q, callback) {
         "sort":"timePosted"
     };
 
-    ad.find(q, callback);
+    console.log(q);
+
+    review.find(q, callback);
 }
