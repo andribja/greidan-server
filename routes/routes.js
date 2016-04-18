@@ -150,6 +150,25 @@ module.exports = function registerRoutes(app) {
         });
     });
     
+    app.get('/messageSent', function(req, res) {
+        var token = req.body.token;
+        user.getUserIdByToken(token, function(err, found_user) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                var query = req.query;
+                query.sender_id = found_user._id;
+                message.getMessage(query, function(err, result) {
+                    if(result instanceof Array) result = {messagelist: result};
+                    console.log(result);
+                    res.json(result);
+                });
+            }
+        });
+    });
+
+
     app.post('/message', function(req, res) {
         var token = req.body.token;
         user.getUserIdByToken(token, function(err, found_user) {

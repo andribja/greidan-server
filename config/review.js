@@ -20,7 +20,7 @@ exports.postReview = function(stars, content, author_id, author_name, reviewee_i
 
     newReview.save(function (err) {
         callback({
-            'response': "Message sent",
+            'response': "Review posted",
             'success': true,
             '_id': _id
         });

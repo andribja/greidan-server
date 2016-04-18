@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
     hashed_password: String,
     salt: String,
     temp_str: String,
-    time_joined:  { type: Number, default: new Date().getTime()}
+    time_joined:  { type: Number, default: new Date().getTime()},
+    avg_rating: Number
 });
 
 var adSchema = mongoose.Schema({
